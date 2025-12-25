@@ -3,10 +3,12 @@ import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
+import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import Icon from '@/components/ui/icon';
 
 const Index = () => {
   const [formData, setFormData] = useState({ name: '', email: '', message: '' });
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const services = [
     {
@@ -88,9 +90,52 @@ const Index = () => {
             <a href="#cases" className="text-white hover:text-primary transition-colors">Кейсы</a>
             <a href="#contact" className="text-white hover:text-primary transition-colors">Контакты</a>
           </div>
-          <Button className="bg-accent hover:bg-accent/90 text-white">
-            Оставить заявку
-          </Button>
+          <div className="hidden md:block">
+            <Button className="bg-accent hover:bg-accent/90 text-white">
+              Оставить заявку
+            </Button>
+          </div>
+          <Sheet open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
+            <SheetTrigger asChild className="md:hidden">
+              <Button variant="ghost" size="icon" className="text-white hover:text-primary">
+                <Icon name="Menu" size={24} />
+              </Button>
+            </SheetTrigger>
+            <SheetContent side="right" className="bg-secondary text-white border-l border-primary/20">
+              <div className="flex flex-col gap-6 mt-8">
+                <a 
+                  href="#services" 
+                  className="text-xl text-white hover:text-primary transition-colors"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  Услуги
+                </a>
+                <a 
+                  href="#cases" 
+                  className="text-xl text-white hover:text-primary transition-colors"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  Кейсы
+                </a>
+                <a 
+                  href="#contact" 
+                  className="text-xl text-white hover:text-primary transition-colors"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  Контакты
+                </a>
+                <Button 
+                  className="bg-accent hover:bg-accent/90 text-white mt-4"
+                  onClick={() => {
+                    setMobileMenuOpen(false);
+                    document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
+                  }}
+                >
+                  Оставить заявку
+                </Button>
+              </div>
+            </SheetContent>
+          </Sheet>
         </nav>
       </header>
 
